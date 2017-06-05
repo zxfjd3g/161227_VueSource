@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="test">尚硅谷IT教育</div>
+
+<ul id="fragment_test">
+  <li>test1</li>
+  <li>test2</li>
+  <li>test3</li>
+</ul>
+
+
+<!--
+1. [].slice.call(lis): 将伪数组转换为真数组
+2. node.nodeType: 得到节点类型
+3. Object.defineProperty(obj, propertyName, {}): 给对象添加属性(指定描述符)
+4. Object.keys(obj): 得到对象自身可枚举属性组成的数组
+5. DocumentFragment: 文档碎片(高效批量更新多个节点)
+6. obj.hasOwnProperty(prop): 判断prop是否是obj自身的属性
+-->
+
+<script type="text/javascript">
+  // 1. [].slice.call(uls): 将伪数组转换为真数组
+  var lis = document.getElementsByTagName('li') // lis是伪数组
+  var lis2 = [].slice.call(lis) //lis2是真数组
+  console.log(lis.forEach, lis2.forEach)
+
+  console.log('------------------------')
+</script>
+
+
+<script type="text/javascript">
+  // 2. node.nodeType: 得到节点类型
+  var ele = document.getElementById('test')
+  var attr = ele.getAttributeNode('id')
+  var text = ele.firstChild
+  // 通过节点类型可以判断出一个节点对象的具体类型
+  console.log(ele.nodeType, attr.nodeType, text.nodeType) // 1 2 3
+  console.log(ele.nodeName, attr.nodeName, text.nodeName)
+  console.log(ele.nodeValue, attr.nodeValue, text.nodeValue)
+
+  console.log('------------------------------')
+</script>
+
+<script type="text/javascript">
+//3. Object.defineProperty(obj, propertyName, {}): 给对象添加属性(指定描述符)
+/*
+ obj: 要在其上定义属性的对象。
+ prop: 要定义或修改的属性的名称。
+ descriptor: 将被定义或修改的属性的描述符。
+*/
+/*
+属性描述符分2种:
+1). 数据描述符
+  configurable: 表示是描述符是否可以修改。默认为 false。
+  enumerable: 表示是否可以被枚举(for...in)。默认为 false。
+  value: 属性初始值。默认为 undefined。
+  writable: 表示属性值是否可以修改。默认为 false。
+2). 存取(访问)描述符
+  get: 一个给属性提供getter的方法，该方法返回值被用作属性值。默认为 undefined。
+  set: 一个给属性提供setter的方法，该方法将接受唯一参数，并将该参数的新值分配给该属性。默认为 undefined。
+
+说明:
+  value/writable与get/set不能同时存在
+*/
+
+  var obj = {}
+
+  Object.defineProperty(obj, 'name', {
+    // configurable: true, //描述符可以修改
+    configurable: false, //描述符不可以修改
+    enumerable: true, //可以枚举
+    // enumerable: false, //不可以枚举
+    value: 'Tom', //初始值
+    // writable: true, //属性值可修改
+    writable: false //属性值不可修改
+  })
+
+  console.log(obj.name)
+  obj.name = 'Jack'
+  console.log(obj.name)
+
+  for (n in obj) {
+    console.log(n, obj[n])
+  }
+
+  /*Object.defineProperty(obj, 'name', {
+    enumerable: false
+  })*/
+  console.log(Object.getOwnPropertyDescriptor(obj, 'name'))
+
+  var p = {
+    firstName: 'zhang',
+    lastName: 'xiaofei'
+  }
+  Object.defineProperty(p, 'fullName', {//2个数据修饰符, 2个访问修饰符
+    configurable: false,
+    enumerable: true,
+    get: function () { //动态计算出当前属性值, 当读取属性值时自动调用
+      return this.firstName + '-' + this.lastName
+    },
+    set: function (value) { //当设置了新的属性值时就自动调用, 同步其它属性值
+      var names = value.split('-')
+      this.firstName = names[0]
+      this.lastName = names[1]
+    }
+  })
+  console.log(p.fullName)
+  p.firstName = 'A'
+  p.lastName = 'B'
+  console.log(p.fullName)
+
+  p.fullName = 'Kobe-Bryant'
+  console.log(p.firstName, p.lastName)
+
+  console.log('-----------------')
+</script>
+
+
+<script>
+  // 4. Object.keys(obj): 得到对象自身可枚举属性组成的数组
+  var obj = {
+    name: 'Tom',
+    age: 12,
+    setName: function (name) {
+      this.name = name
+    }
+  }
+  console.log(Object.keys(obj));
+  Object.defineProperty(obj, 'name', {
+    enumerable: false
+  })
+  console.log(Object.keys(obj));
+
+  console.log('-------------')
+</script>
+
+
+<script>
+  // 5. DocumentFragment: 文档碎片(高效批量更新多个节点)
+  var fragment = document.createDocumentFragment()
+  var ul = document.getElementById('fragment_test')
+  var child = null
+  while(child = ul.firstChild) {
+    fragment.appendChild(child)
+  }
+  var childNodes = fragment.childNodes
+  ;[].slice.call(childNodes).forEach(function (child, index) {
+    if(child.nodeType===1) {
+      child.innerHTML = '新的内容'
+    }
+  })
+  ul.appendChild(fragment)
+</script>
+
+<script>
+  //6. obj.hasOwnProperty(prop): 判断prop是否是obj自身的属性
+  var obj = {name: 'Tom'}
+  console.log(obj.hasOwnProperty('name1'))
+  console.log(obj.hasOwnProperty('name'))
+  console.log(obj.hasOwnProperty('toString'))
+
+</script>
+
+
+</body>
+</html>

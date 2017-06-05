@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02_数据代理</title>
+</head>
+<body>
+
+<div id="app">
+  <button v-on:click="show">测试event</button>
+</div>
+<!--
+
+-->
+<script src="js/mvvm/compile.js"></script>
+<script src="js/mvvm/observer.js"></script>
+<script src="js/mvvm/watcher.js"></script>
+<script src="js/mvvm/mvvm.js"></script>
+<script>
+  const vm = new MVVM({
+    el: '#app',
+    data: {
+      msg: 'atguigu.com'
+    },
+    methods: {
+      show: function (event) {
+        console.log(this, event);
+        alert(this.msg)
+      }
+    }
+  })
+</script>
+</body>
+</html>

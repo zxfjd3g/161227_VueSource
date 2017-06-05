@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03_模板解析_表达式_vue</title>
+</head>
+<body>
+
+<div id="app">
+  <button v-on:click="show">测试event</button>
+</div>
+<!--
+
+-->
+<script src="js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    el: '#app',
+    methods: {
+      show: function (event) {
+        console.log(this, event);
+        alert('show()')
+      }
+    }
+  })
+  debugger
+</script>
+</body>
+</html>

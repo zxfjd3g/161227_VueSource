@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <!--
+
+  -->
+</head>
+<body>
+<div id="app">
+
+  <input type="text" v-model="wife.son.name">
+  <p>{{wife.son.name}}</p>
+
+</div>
+</body>
+<script src="js/mvvm/compile.js"></script>
+<script src="js/mvvm/observer.js"></script>
+<script src="js/mvvm/watcher.js"></script>
+<script src="js/mvvm/mvvm.js"></script>
+<script type="text/javascript">
+  var vm = new MVVM({
+    el: "#app",
+    data: {
+      name: "damu",
+      age: 18,
+      wife: {
+        name: "范冰冰",
+        age: 44,
+        son: {
+          name: "郭德纲",
+          age: 55
+        }
+      }
+    }
+  })
+</script>
+</html>

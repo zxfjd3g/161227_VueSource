@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>02_数据代理_vue</title>
+</head>
+<body>
+
+<div id="app">
+  {{name}}--{{age}}
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      name: 'tom',
+      age: 12
+    }
+  })
+  console.log(vm.name, vm.age)
+  vm.name = 'xfzhang'
+  vm.age = 23
+
+  // vm代理了配置对象中data的所有属性
+  console.log(vm, vm._data)
+</script>
+</body>
+</html>

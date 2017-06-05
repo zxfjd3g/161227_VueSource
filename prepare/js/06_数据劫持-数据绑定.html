@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <!--
+    数据代理
+      为vm新增访问描述符（来源于data的数据描述符）
+
+    数据劫持
+      将data中的属性重定义为访问描述符
+
+    Watcher:
+      一个非事件指令或表达式就对应一个watcher
+      在初始化编译模板时创建
+      {
+        vm,  //vm对象
+        exp, //对应指令的表达式
+        cb, //当表达式所对应的数据发生改变的回调函数
+        value, //表达式当前的值
+        depIds //表达式中各级属性所对应的dep对象的集合对象
+                //属性名为dep的id, 属性值为dep
+
+      }
+    Dep:
+      每个data中的属性(各层级)对应一个dep对象
+      在初始化劫持data中各个属性时创建对应的dep对象
+      {
+        id, // 每个dep都有一个唯一的id
+        subs //包含n个对应watcher的数组,
+             //所有有此属性的指令或表达所对应的watcher都会动态添加进来
+             //当此属性的值发生改变, 所有subs中的watcher都会收到更新的通知, 从而最终更新对应的界面
+      }
+  -->
+</head>
+<body>
+<div id="app">
+
+  <!--<input type="text" v-model="wife.son.name">-->
+
+  <p>{{wife.son.name}}</p>
+  <p>{{wife.son.name}}</p>
+ <!-- <p>{{wife.son.name}}</p>-->
+
+  <button v-on:click="update">更新数据</button>
+</div>
+</body>
+<script src="js/mvvm/compile.js"></script>
+<script src="js/mvvm/observer.js"></script>
+<script src="js/mvvm/watcher.js"></script>
+<script src="js/mvvm/mvvm.js"></script>
+<script type="text/javascript">
+  var vm = new MVVM({
+    el: "#app",
+    data: {
+      name: "damu",
+      age: 18,
+      wife: {
+        name: "范冰冰",
+        age: 44,
+        son: {
+          name: "郭德纲",
+          age: 55
+        }
+      }
+    },
+    methods: {
+      update: function () {
+        this.wife.son.name = 'Tom'
+      }
+    }
+  })
+</script>
+</html>
