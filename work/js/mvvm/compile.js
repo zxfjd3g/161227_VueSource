@@ -145,16 +145,20 @@ var compileUtil = {
 
     // <v-model>
     model: function(node, vm, exp) {
+
         this.bind(node, vm, exp, 'model');
 
         var me = this,
+          // 得到当前表达式所对应的值
             val = this._getVMVal(vm, exp);
-        node.addEventListener('input', function(e) {
+        // 给input节点绑定input事件监听
+        node.addEventListener('input', function(e) { // 回调函数
+            // 得到最新的值
             var newValue = e.target.value;
             if (val === newValue) {
                 return;
             }
-
+            // 将最新的值设置到data中对应的属性
             me._setVMVal(vm, exp, newValue);
             val = newValue;
         });
