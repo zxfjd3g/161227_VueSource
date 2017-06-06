@@ -7,7 +7,8 @@
 <body>
 
 <div id="app">
-
+  <p>{{name}}</p>
+  <p>{{wife.age}}</p>
 </div>
 <!--
 
@@ -17,7 +18,17 @@
 <script src="js/mvvm/watcher.js"></script>
 <script src="js/mvvm/mvvm.js"></script>
 <script>
-
+  new MVVM({
+    el: '#app',   // 选择器字符串
+    // el: document.getElementById('app'), // 元素
+    data: {
+      name: 'damu',
+      wife: {
+        name: 'binbin',
+        age: 18
+      }
+    }
+  })
 </script>
 </body>
 </html>
