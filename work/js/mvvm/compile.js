@@ -91,8 +91,9 @@ Compile.prototype = {
                 if (me.isEventDirective(dir)) {
                     // 处理事件指令(去绑定事件监听)
                     compileUtil.eventHandler(node, me.$vm, exp, dir);
-                // 普通指令
+                // 普通指令 text/html/class
                 } else {
+                    // 得到指令所对应的处理函数处理指令
                     compileUtil[dir] && compileUtil[dir](node, me.$vm, exp);
                 }
                 // 删除指令属性
@@ -137,6 +138,11 @@ var compileUtil = {
         this.bind(node, vm, exp, 'html');
     },
 
+    //v-class
+    class: function(node, vm, exp) {
+        this.bind(node, vm, exp, 'class');
+    },
+
     // <v-model>
     model: function(node, vm, exp) {
         this.bind(node, vm, exp, 'model');
@@ -154,15 +160,10 @@ var compileUtil = {
         });
     },
 
-    //v-class
-    class: function(node, vm, exp) {
-        this.bind(node, vm, exp, 'class');
-    },
-
     /*
     1. 根据表达式名称得到对应的值, 调用updater工具对象更新节点对应的属性
      */
-    bind: function(node, vm, exp, dir) {
+    bind: function(node, vm, exp, dir) {// dir: text/html/class
         // 确定用于更新节点的函数
         var updaterFn = updater[dir + 'Updater'];
         // 调用更新函数更新节点
@@ -235,12 +236,9 @@ var updater = {  // 'textUpdater'  updater['textUpdater']()
     },
 
     // 标签的class属性
-    classUpdater: function(node, value, oldValue) {
+    classUpdater: function(node, value) {
         var className = node.className;
-        className = className.replace(oldValue, '').replace(/\s$/, '');
-
-        var space = className && String(value) ? ' ' : '';
-
+        var space = className ? ' ' : ''
         node.className = className + space + value;
     },
 
