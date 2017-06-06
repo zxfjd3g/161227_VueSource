@@ -34,13 +34,10 @@
 </head>
 <body>
 <div id="app">
-
-  <!--<input type="text" v-model="wife.son.name">-->
-
-  <p>{{wife.son.name}}</p>
-  <p>{{wife.son.name}}</p>
- <!-- <p>{{wife.son.name}}</p>-->
-
+  <p>{{name}}</p>
+  <p>{{name}}</p>
+  <p>{{wife.name}}</p>
+  <p>{{wife.age}}</p>
   <button v-on:click="update">更新数据</button>
 </div>
 </body>
@@ -53,19 +50,15 @@
     el: "#app",
     data: {
       name: "damu",
-      age: 18,
       wife: {
         name: "范冰冰",
         age: 44,
-        son: {
-          name: "郭德纲",
-          age: 55
-        }
       }
     },
     methods: {
       update: function () {
-        this.wife.son.name = 'Tom'
+        this.name = 'sadamu'
+        this.wife.name = 'Tom'
       }
     }
   })

@@ -12,6 +12,7 @@ function MVVM(options) {
         me._proxy(key);
     });
 
+    // 实现对data数据的劫持(绑定)
     observe(data, this);
 
     // 创建编译对象
